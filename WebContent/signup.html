@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>注册</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="./app.css">
+</head>
+<body>
+  <a href="index.html">返回首页</a>
+  <form id="sign-up-form">
+    <input name="username" type="text" placeholder="用户名">
+    <input name="password" type="password" placeholder="密码">
+    <input id="sign-up" type="button" value="注册">
+  </form>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('#sign-up').on('click', function() {
+        $.ajax({
+          url: 'http://localhost:3004/signup',
+          method: 'get',
+          data: $('#sign-up-form').serialize()
+        }).done(function(response) {
+          if(response.ret == 200) {
+            location.href = 'signin.html';
+          }
+        }).fail(function() {
+          console.log('signup fail');
+        })
+      })
+    })
+  </script>
+</body>
+</html>

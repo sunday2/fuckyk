@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>电子商务</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="./node_modules/swiper/dist/css/swiper.min.css">
+	<link rel="stylesheet" type="text/css" href="./app.css">
+</head>
+<body>
+  <div id="app">
+    <div class="header">
+      <div>京东</div>
+      <input type="text" name="" placeholder="输入商品名">
+      <a id="nologin" href="signin.html">登录</a>
+      <a id="logined" class="hide" v-on:click="logout">退出登录</a>
+    </div>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="file in files"><img :src="file.source"></div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+  <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="./node_modules/swiper/dist/js/swiper.jquery.min.js"></script>
+  <script src="node_modules/vue/dist/vue.js"></script>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      created() {
+        this.getFiles();
+      },
+      data: {
+        files: []
+      },
+      methods:{
+        getFiles: function() {
+          var _this = this;
+          if(localStorage.user_id) {
+            $('#nologin').addClass('hide');
+            $('#logined').removeClass('hide');
+          }
+          $.ajax({
+            url: 'http://localhost:3004/getfiles',
+            method: 'get'
+          }).done(function(response) {
+            if(response.ret == 200) {
+              var data = response.data;
+              for(var i=0; i<data.length; i++) {
+                var file = {
+                  source: data[i].source,
+                  id: data[i].id
+                };
+                _this.files.push(file);
+              }
+              _this.initSwiper();
+            }
+          }).fail(function() {
+            console.log('get files fail');
+          })
+        },
+
+        initSwiper: function() {
+          setTimeout(function(){
+            new Swiper('.swiper-container', {
+              direction: 'horizontal',
+              loop: true,
+              pagination: '.swiper-pagination',
+            });
+          },100)
+        },
+        logout: function() {
+          localStorage.removeItem('user_id');
+          location.href = 'index.html';
+        }
+      }
+    })
+  </script>
+  <script>
+
+  </script>
+</body>
+</html>

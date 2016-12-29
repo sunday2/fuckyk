@@ -1,0 +1,25 @@
+{
+  "getfiles": {
+    "ret": 200,
+    "data": [{
+      "source": "images/img1.jpeg",
+      "id": 1
+    }, {
+      "source": "images/img2.jpeg",
+      "id": 2
+    }, {
+      "source": "images/img3.jpeg",
+      "id": 3
+    }]
+  },
+  "signin": {
+    "ret": 200,
+    "data": {
+      "user_id": "123456"
+    }
+  },
+  "signup": {
+    "ret": 200,
+    "data": {}
+  }
+}

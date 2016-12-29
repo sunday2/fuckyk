@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>推广位管理</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="./app.css">
+</head>
+<body>
+  <div class="container admin" id="app">
+    <a href="index.html">返回首页查看</a>
+  	<form id="fileForm">
+      <input type="file" name="upload-file">
+      <input type="button" value="上传" v-on:click="uploadFile">
+    </form>
+    <div class="file-panel">
+  	  <div v-for="file in files">
+      <img :src="file.source">
+      <input v-on:click="deleteFile" type="button" value="删除" :data-file-id="file.id"/></div>
+    </div>
+  </div>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/vue/dist/vue.js"></script>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      created(){
+        this.getFiles();
+      },
+      data: {
+        files: []
+      },
+      methods:{
+        getFiles: function() {
+          var _this = this;
+          $.ajax({
+     	      url: 'http://localhost:3004/getfiles',
+            method: 'get',
+     	    }).done(function(response) {
+            if(response.ret == 200) {
+              var data = response.data;
+              for(var i=0; i<data.length; i++) {
+                var file = {
+                  source: data[i].source,
+                  id: data[i].id
+                };
+                _this.files.push(file);
+              }
+            }
+    	    }).fail(function() {
+            console.log('get files fail');
+          })
+        },
+
+        uploadFile: function() {
+          var formData = new FormData($('#fileForm'));
+          $.ajax({
+            url: '/fuckyk/upload',
+            method: 'post',
+            data: formData,
+            contentType: false,
+            processData: false
+          }).done(function(data) {
+            var newFile = {
+              source: data.source,
+              id: data.id
+            };
+            files.unshift(newFile);
+          }).fail(function() {
+            console.log('upload fail');
+          })
+        },
+
+        deleteFile: function(e) {
+          $.ajax({
+            url: '',
+          }).done(function(data) {
+            e.target.parentNode.remove();
+          }).fail(function() {
+            console.log('delete file fail');
+          })
+        }
+      }
+    })
+  </script>
+</body>
+</html>

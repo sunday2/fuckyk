@@ -1,0 +1,16 @@
+{
+  "name": "bullshit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "swiper": "^3.4.1",
+    "vue": "^2.1.8"
+  }
+}
