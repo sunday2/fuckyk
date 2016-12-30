@@ -18,12 +18,15 @@
     $(document).ready(function(){
       $('#sign-up').on('click', function() {
         $.ajax({
-          url: 'http://localhost:3004/signup',
-          method: 'get',
-          data: $('#sign-up-form').serialize()
+          url: '/fuckyk/signup',
+          method: 'post',
+          data: $('#sign-up-form').serialize(),
+          dataType: 'json'
         }).done(function(response) {
           if(response.ret == 200) {
             location.href = 'signin.html';
+          }else{
+        	console.log(response.msg);
           }
         }).fail(function() {
           console.log('signup fail');

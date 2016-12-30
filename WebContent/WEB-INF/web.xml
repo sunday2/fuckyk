@@ -10,7 +10,7 @@
   </servlet-mapping>
   
   
-   <servlet>
+  <servlet>
     <servlet-name>signin</servlet-name>
     <servlet-class>edu.gzhu.yk.servlet.LoginHandleServlet</servlet-class>
   </servlet>
@@ -20,15 +20,24 @@
   </servlet-mapping>
   
   
-   <servlet>
+  <servlet>
     <servlet-name>signup</servlet-name>
     <servlet-class>edu.gzhu.yk.servlet.RegistHandleServlet</servlet-class>
   </servlet>
-    <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>signup</servlet-name>
     <url-pattern>/signup</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>getPictures</servlet-name>
+    <servlet-class>edu.gzhu.yk.servlet.GetPDHandleServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getPictures</servlet-name>
+    <url-pattern>/getPictures</url-pattern>
+  </servlet-mapping>
+
   
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

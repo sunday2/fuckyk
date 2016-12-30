@@ -17,7 +17,7 @@
     </div>
     <div class="swiper-container">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="file in files"><img :src="file.source"></div>
+        <div class="swiper-slide" v-for="file in files"><img :src="file.picture_url"></div>
       </div>
       <div class="swiper-pagination"></div>
     </div>
@@ -42,15 +42,16 @@
             $('#logined').removeClass('hide');
           }
           $.ajax({
-            url: 'http://localhost:3004/getfiles',
-            method: 'get'
+            url: '/fuckyk/getPictures',
+            method: 'get',
+            dataType: "json"
           }).done(function(response) {
             if(response.ret == 200) {
               var data = response.data;
               for(var i=0; i<data.length; i++) {
                 var file = {
-                  source: data[i].source,
-                  id: data[i].id
+                  picture_url: '/fuckyk/upload/' + data[i].picture_url,
+                  picture_id: data[i].picture_id
                 };
                 _this.files.push(file);
               }

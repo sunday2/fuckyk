@@ -58,35 +58,21 @@ public class RegistHandleServlet extends HttpServlet {
 		public JSONObject regist(HttpServletRequest request, HttpServletResponse response) {
 			JSONObject joj=new JSONObject();
 			try {
-				//Chinese toc = new Chinese();
 				String name = request.getParameter("username");
 				String psw = request.getParameter("password");
-				//String realname = toc.toChinese(request.getParameter("realname"))
 				Member m = new Member();
 				m.setName(name);
 				m.setPassword(psw);
-				//遍历数据库查看用户是否存在
 				List<Member> lm = md.findByMembername(name);
-				if (lm.size() == 0) { //数据库不存在该名字
+				if (lm.size() == 0) {
 					if (md.save(m)) {
-						/*RequestDispatcher rd = request
-								.getRequestDispatcher("registSuccess.jsp");
-						rd.forward(request, response);*/
 						joj.put("ret", 200);
 						
 					} else {
-						/*request.setAttribute("errors", "用户注册失败！");
-						RequestDispatcher rd = request
-								.getRequestDispatcher("errors.jsp");
-						rd.forward(request, response);*/
 						joj.put("ret", 200);
 						joj.put("msg", "数据库插入错误");
 					}
-				} else {   //数据库已经有这个名字
-					/*request.setAttribute("errors", "用户名已经存在！");
-					RequestDispatcher rd = request
-							.getRequestDispatcher("errors.jsp");
-					rd.forward(request, response);*/
+				} else {  
 					joj.put("ret", 400);
 					joj.put("msg","该名字已经存在");
 				}
