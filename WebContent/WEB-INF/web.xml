@@ -8,7 +8,29 @@
     <servlet-name>upload</servlet-name>
     <url-pattern>/upload</url-pattern>
   </servlet-mapping>
+  
+  
+   <servlet>
+    <servlet-name>signin</servlet-name>
+    <servlet-class>edu.gzhu.yk.servlet.LoginHandleServlet</servlet-class>
+  </servlet>
+    <servlet-mapping>
+    <servlet-name>signin</servlet-name>
+    <url-pattern>/signin</url-pattern>
+  </servlet-mapping>
+  
+  
+   <servlet>
+    <servlet-name>signup</servlet-name>
+    <servlet-class>edu.gzhu.yk.servlet.RegistHandleServlet</servlet-class>
+  </servlet>
+    <servlet-mapping>
+    <servlet-name>signup</servlet-name>
+    <url-pattern>/signup</url-pattern>
+  </servlet-mapping>
+  
+  
   <welcome-file-list>
-    <welcome-file>upload.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 </web-app>

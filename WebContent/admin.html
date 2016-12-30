@@ -53,7 +53,8 @@
         },
 
         uploadFile: function() {
-          var formData = new FormData($('#fileForm'));
+          var _this = this;
+          var formData = new FormData($('#fileForm')[0]);
           $.ajax({
             url: '/fuckyk/upload',
             method: 'post',
@@ -65,7 +66,7 @@
               source: data.source,
               id: data.id
             };
-            files.unshift(newFile);
+            _this.files.unshift(newFile);
           }).fail(function() {
             console.log('upload fail');
           })

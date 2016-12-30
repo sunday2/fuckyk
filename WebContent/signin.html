@@ -19,13 +19,14 @@
     $(document).ready(function(){
       $('#sign-in').on('click', function() {
         $.ajax({
-          url: 'http://localhost:3004/signin',
-          method: 'get',
-          data: $('#sign-in-form').serialize()
+          url: '/fuckyk/signin',
+          method: 'post',
+          data: $('#sign-in-form').serialize(),
+          dataType: 'json'
         }).done(function(response) {
           var data = response.data;
           localStorage.setItem('user_id',data.user_id);
-          location.href = '/index.html';
+          location.href = '/fuckyk/index.html';
         }).fail(function() {
           console.log('signin fail');
         })

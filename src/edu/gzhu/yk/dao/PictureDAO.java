@@ -14,13 +14,12 @@ public class PictureDAO {
 		c = DBConnector.getConnection();
 	}
 
-	public boolean save(Picture p) {
-		String saveSql = "insert into picture (picture_id,pictue_url) values(?,?)";
+	public boolean save(String picture_url) {
+		String saveSql = "insert into picture (picture_url) values(?)";
 		PreparedStatement ps;
 		try {
 			ps = c.prepareStatement(saveSql);
-			ps.setInt(1, p.getPicture_id());
-			ps.setString(2, p.getPicture_url());
+			ps.setString(1, picture_url);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL“Ï≥£");
