@@ -47,7 +47,6 @@ public class UploadHandleServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		 //锟矫碉拷锟较达拷锟侥硷拷锟侥憋拷锟斤拷目录锟斤拷锟斤拷锟较达拷锟斤拷锟侥硷拷锟斤拷锟斤拷锟絎EB-INF目录锟铰ｏ拷锟斤拷锟斤拷锟斤拷锟斤拷锟街憋拷臃锟斤拷剩锟斤拷锟街わ拷洗锟斤拷募锟斤拷陌锟饺�
-        String savePath = this.getServletContext().getRealPath("/WEB-INF/upload");
         JSONObject joj = new JSONObject();
         //锟较达拷时锟斤拷锟缴碉拷锟斤拷时锟侥硷拷锟斤拷锟斤拷目录
         String tempPath = this.getServletContext().getRealPath("/WEB-INF/temp");
