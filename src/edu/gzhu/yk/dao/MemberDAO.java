@@ -42,7 +42,7 @@ public class MemberDAO {
 			ps = c.prepareStatement(findByNameSql);
 			ps.setString(1, name);
 			ResultSet rs = ps.executeQuery();
-			List<Member> list=new ArrayList<Member>();
+			List<Member> list = new ArrayList<Member>();
 			while (rs.next()) {
 				Member m = new Member();
 				m.setMember_id(rs.getInt("member_id"));
@@ -51,13 +51,13 @@ public class MemberDAO {
 				list.add(m);
 			}
 			return list;
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return null;
-		
+
 	}
 }

@@ -33,13 +33,14 @@ public class PictureDAO {
 		}
 		return true;
 	}
-	public List<Picture> getAll(){
+
+	public List<Picture> getAll() {
 		String saveSql = "select picture_id, picture_url from picture";
 		PreparedStatement ps;
 		try {
 			ps = c.prepareStatement(saveSql);
 			ResultSet rs = ps.executeQuery();
-			List<Picture> list=new ArrayList<Picture>();
+			List<Picture> list = new ArrayList<Picture>();
 			while (rs.next()) {
 				Picture m = new Picture();
 				m.setPicture_id(rs.getInt("picture_id"));
@@ -52,7 +53,7 @@ public class PictureDAO {
 			e.printStackTrace();
 			return null;
 		}
-		
+
 	}
-	
+
 }

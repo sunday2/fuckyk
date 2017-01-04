@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import edu.gzhu.fuckyk.pojo.Member;
 import edu.gzhu.yk.dao.MemberDAO;
+import edu.gzhu.yk.util.ResponseUtils;
 
 /**
  * Servlet implementation class RegistHandleServlet
@@ -22,65 +23,73 @@ import edu.gzhu.yk.dao.MemberDAO;
 @WebServlet("/RegistHandleServlet")
 public class RegistHandleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private MemberDAO md;   
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RegistHandleServlet() {
-        super();
-        md=new MemberDAO();
-        // TODO Auto-generated constructor stub
-    }
+	private MemberDAO md;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		JSONObject joj=regist(request, response);
-		System.out.println(joj.toString());
-		 PrintWriter writer=response.getWriter();
-	        writer.write(joj.toString());
-	        writer.flush();
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+	public RegistHandleServlet() {
+		super();
+		md = new MemberDAO();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
+		JSONObject joj = regist(request, response);
+		System.out.println(joj.toString());
+		ResponseUtils.renderJson(response, joj.toString());
+		/*PrintWriter writer = response.getWriter();
+		writer.write(joj.toString());
+		writer.flush();*/
+		// response.getWriter().append("Served at:
+		// ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("dopost");
 		doGet(request, response);
 	}
-	//注册需要执行的操作
-		public JSONObject regist(HttpServletRequest request, HttpServletResponse response) {
-			JSONObject joj=new JSONObject();
-			try {
-				String name = request.getParameter("username");
-				String psw = request.getParameter("password");
-				Member m = new Member();
-				m.setName(name);
-				m.setPassword(psw);
-				List<Member> lm = md.findByMembername(name);
-				if (lm.size() == 0) {
-					if (md.save(m)) {
-						joj.put("ret", 200);
-						
-					} else {
-						joj.put("ret", 200);
-						joj.put("msg", "数据库插入错误");
-					}
-				} else {  
-					joj.put("ret", 400);
-					joj.put("msg","该名字已经存在");
+
+	// 注册需要执行的操作
+	public JSONObject regist(HttpServletRequest request, HttpServletResponse response) {
+		JSONObject joj = new JSONObject();
+		try {
+			String name = request.getParameter("username");
+			String psw = request.getParameter("password");
+			Member m = new Member();
+			m.setName(name);
+			m.setPassword(psw);
+			List<Member> lm = md.findByMembername(name);
+			if (lm.size() == 0) {
+				if (md.save(m)) {
+					joj.put("ret", 200);
+
+				} else {
+					joj.put("ret", 200);
+					joj.put("msg", "数据库插入错误");
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
+			} else {
+				joj.put("ret", 400);
+				joj.put("msg", "该名字已经存在");
 			}
-			return joj;
-			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return joj;
+
+	}
 
 }

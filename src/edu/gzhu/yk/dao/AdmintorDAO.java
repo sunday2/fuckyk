@@ -30,5 +30,5 @@ public class AdmintorDAO {
 		}
 		return true;
 	}
-	
+
 }
