@@ -23,14 +23,17 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource;
+
 import edu.gzhu.yk.dao.PictureDAO;
 import edu.gzhu.yk.util.ResponseUtils;
 
 /**
  * Servlet implementation class UploadHandleServlet
  */
-@WebServlet("/UploadHandleServlet")
-public class UploadHandleServlet extends HttpServlet {
+@WebServlet("/UploadHandleServlet2")
+public class UploadHandleServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PictureDAO pd;
 	private String fileName = "";
@@ -38,7 +41,7 @@ public class UploadHandleServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public UploadHandleServlet() {
+	public UploadHandleServlet2() {
 		super();
 		this.pd = new PictureDAO();
 		// TODO Auto-generated constructor stub
@@ -66,7 +69,7 @@ public class UploadHandleServlet extends HttpServlet {
 			fileUpload.setHeaderEncoding("UTF-8");
 			fileUpload.setProgressListener(new ProgressListener() {
 				public void update(long pBytesRead, long pContentLength, int arg2) {
-					System.out.println("锟侥硷拷锟斤拷小为锟斤拷" + pContentLength + ",锟斤拷前锟窖达拷锟斤拷" + pBytesRead);
+					System.out.println("目前已经读取了" + pContentLength + ",中的" + pBytesRead+"字节数据");
 				}
 			});
 			if (!fileUpload.isMultipartContent(request)) {
@@ -119,7 +122,21 @@ public class UploadHandleServlet extends HttpServlet {
 						ResponseUtils.renderJson(response, joj.toString());
 						return;
 					}
-					System.out.println("文件扩展名:" + fileExtName);
+					//将图片存储到图片服务器上
+					fileName=mkFileName(fileName);
+					//另一台服务器的请求路径，也是图片存放位置，其实调用的是tomcat默认的servlet
+					String picture_url="http://localhost:8088/image-web/upload/"+fileName;
+					Client client=new Client();
+					WebResource resource=client.resource(picture_url);
+					//post,get,put
+					try {
+						resource.put(String.class, item.get());
+					} catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
+					}
+					//将图片存储到磁盘
+				/*	System.out.println("文件扩展名:" + fileExtName);
 					InputStream is = item.getInputStream();
 					fileName = mkFileName(fileName);
 					System.out.println("fi:" + fileName);
@@ -132,8 +149,10 @@ public class UploadHandleServlet extends HttpServlet {
 						fos.write(buffer, 0, length);
 					}
 					is.close();
-					fos.close();
+					fos.close();*/
+					//清除item
 					item.delete();
+					
 				}
 			}
 		} catch (FileUploadBase.FileSizeLimitExceededException e) {
@@ -169,6 +188,7 @@ public class UploadHandleServlet extends HttpServlet {
 		}
 		
 		try {
+			//将图片相关信息存入数据库
 			System.out.println(fileName);
 			if (this.pd.save(fileName)) {
 				joj.put("ret", "200");
@@ -201,10 +221,12 @@ public class UploadHandleServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
+	
+	//生成文件名，避免重复文件不能存放
 	public String mkFileName(String fileName) {
 		return UUID.randomUUID().toString() + "_" + fileName;
 	}
-
+	//生成文件路径，避免路径相同
 	public String mkFilePath(String savePath, String fileName) {
 		int hashcode = fileName.hashCode();
 		int dir1 = hashcode & 0xf;

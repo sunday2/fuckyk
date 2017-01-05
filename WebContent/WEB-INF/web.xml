@@ -5,7 +5,7 @@
 	metadata-complete="true" version="3.0">
 	<servlet>
 		<servlet-name>upload</servlet-name>
-		<servlet-class>edu.gzhu.yk.servlet.UploadHandleServlet</servlet-class>
+		<servlet-class>edu.gzhu.yk.servlet.UploadHandleServlet2</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>upload</servlet-name>
@@ -34,7 +34,7 @@
 
 	<servlet>
 		<servlet-name>getPictures</servlet-name>
-		<servlet-class>edu.gzhu.yk.servlet.GetPDHandleServlet</servlet-class>
+		<servlet-class>edu.gzhu.yk.servlet.GetADHandleServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>getPictures</servlet-name>
